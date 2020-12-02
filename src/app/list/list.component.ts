@@ -12,22 +12,24 @@ export class ListComponent implements OnInit {
   duplicate:number = 0;
   
   constructor() { }
-
+  ngOnInit(): void {
+  }
   onEnterKey(event:any){
+    this.duplicate = 0;
     this.val = event.target.value;
-    debugger;
+    
     if(this.val == ""){
-      //alert("value is empty");
       this.emptySwal.fire();
     }
     else
     {
       this.list.forEach(element => {
-        if(element.text == this.val){
+        if(element.text == this.val)
+        {
           this.duplicate++;
         }
       });
-      
+
       if(this.duplicate < 1){
         this.list.push({"text" : this.val, "isChecked" : false});
       }
@@ -36,17 +38,21 @@ export class ListComponent implements OnInit {
   }
   
   onAddBtnClick(newitem:any){
+    this.duplicate = 0;
     this.val = newitem.value;
+
     if(this.val == ""){
-      //alert("value is empty");
       this.emptySwal.fire();
     }
     else
     {
       this.list.forEach(element => {
-        if(element.text == this.val){
+
+        if(element.text == this.val)
+        {
           this.duplicate++;
         }
+
       });
 
       if(this.duplicate < 1){
@@ -56,7 +62,21 @@ export class ListComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  toggleStatus(item:any) {
+    this.list.forEach(element => {
+      if(element.text == item.text)
+      {
+        if(element.isChecked == true)
+        {
+          element.isChecked = false;
+        }
+        else
+        {
+          element.isChecked = true;
+        }
+      }
+    });
   }
+  
 
 }

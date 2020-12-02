@@ -15,9 +15,14 @@
         </div>
         <div class="my-5 w-75 mx-auto">
             <ul class="list-group" *ngFor="let item of list">
-                <li class="list-group-item d-flex align-item-center justify-content-between">
-                    {{item.text}} <i class="fa fa-2x fa-circle-o text-primary"></i>
+                <li *ngIf="item.isChecked; else notchecked" class="list-group-item d-flex align-item-center justify-content-between bg-light">
+                    {{item.text}} <i (click)="toggleStatus(item)" class="fa fa-2x fa-check-circle text-primary"></i>
                 </li>
+                <ng-template #notchecked>
+                    <li class="list-group-item d-flex align-item-center justify-content-between">
+                        {{item.text}} <i (click)="toggleStatus(item)" class="fa fa-2x fa-circle-o text-primary"></i>
+                    </li>
+                </ng-template>
             </ul>
         </div>
     </div>
