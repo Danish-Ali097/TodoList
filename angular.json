@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "TodoList"
+  "defaultProject": "TodoList",
+  "cli": {
+    "analytics": "418e2cb3-bb40-44e9-864d-126249c301f8"
+  }
 }
