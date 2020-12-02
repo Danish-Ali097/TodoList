@@ -1,17 +1,22 @@
+<swal #emptySwal
+    title="Alert"
+    text="Please Enter some text in field"
+    icon="warning">
+</swal>
 <div class="card">
     <div class="card-body">
         <div class="input-group w-50 mx-auto">
-            <input type="text" name="newItem" class="form-control" placeholder="Add Item..." />
+            <input type="text" name="newItem" #newitem (keyup.enter)="onEnterKey($event)" class="form-control" placeholder="Add Item..." />
             <div class="input-group-append">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" (click)="onAddBtnClick(newitem)">
                     Add
                 </button>
             </div>
         </div>
         <div class="my-5 w-75 mx-auto">
-            <ul class="list-group">
+            <ul class="list-group" *ngFor="let item of list">
                 <li class="list-group-item d-flex align-item-center justify-content-between">
-                    123 <i class="fa fa-2x fa-circle-o text-primary"></i>
+                    {{item.text}} <i class="fa fa-2x fa-circle-o text-primary"></i>
                 </li>
             </ul>
         </div>
