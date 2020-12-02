@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import {DbfirestoreService} from '../dbfirestore.service';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -11,57 +13,49 @@ export class ListComponent implements OnInit {
   val:string = "";
   duplicate:number = 0;
   
-  constructor() { }
+  constructor(public db:DbfirestoreService) { 
+    console.log(db.GetItems());
+    debugger;
+  }
   ngOnInit(): void {
   }
   onEnterKey(event:any){
     this.duplicate = 0;
     this.val = event.target.value;
-    
-    if(this.val == ""){
-      this.emptySwal.fire();
-    }
-    else
-    {
-      this.list.forEach(element => {
-        if(element.text == this.val)
-        {
-          this.duplicate++;
-        }
-      });
-
-      if(this.duplicate < 1){
-        this.list.push({"text" : this.val, "isChecked" : false});
-      }
-      event.target.value = "";
-    }
+    this.validateAndAddItem(this.val);
+    event.target.value = "";
   }
   
   onAddBtnClick(newitem:any){
     this.duplicate = 0;
     this.val = newitem.value;
+    this.validateAndAddItem(this.val);
+    newitem.value = "";
+    
+  }
 
+  validateAndAddItem(item:any){
     if(this.val == ""){
       this.emptySwal.fire();
     }
     else
     {
-      this.list.forEach(element => {
+      // this.list.forEach(element => {
 
-        if(element.text == this.val)
-        {
-          this.duplicate++;
-        }
+      //   if(element.text == this.val)
+      //   {
+      //     this.duplicate++;
+      //   }
 
-      });
+      // });
 
       if(this.duplicate < 1){
-        this.list.push({"text" : this.val, "isChecked" : false});
+        //this.list.push({"text" : this.val, "isChecked" : false});
+        this.db.AddItem({"text" : this.val, "isChecked" : false});
       }
-      newitem.value = "";
+      
     }
   }
-
   toggleStatus(item:any) {
     this.list.forEach(element => {
       if(element.text == item.text)
